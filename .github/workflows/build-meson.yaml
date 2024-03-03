@@ -1,0 +1,45 @@
+name: Build
+on: [push, pull_request]
+jobs:
+  simple-build:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        buildsystem:
+          - meson
+          - cmake
+
+    steps:
+      - name: Install build system
+        run: |
+          sudo apt-get install ninja-build ${{ matrix.buildsystem }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout FreeRTOS-kernel
+        uses: actions/checkout@v4
+        with:
+          repository: FreeRTOS/FreeRTOS-Kernel
+          path: freertos
+
+      - name: Checkout libcsp
+        uses: actions/checkout@v4
+        with:
+          repository: libcsp/libcsp
+          path: subprojects/libcsp
+
+      - name: Configure with Meson
+        if: ${{ matrix.buildsystem == 'meson' }}
+        run: |
+          meson setup builddir
+
+      - name: Configure with CMake
+        if: ${{ matrix.buildsystem == 'cmake' }}
+        run: |
+          cmake -B builddir -GNinja
+
+      - name: Build
+        run: |
+          ninja -C builddir
