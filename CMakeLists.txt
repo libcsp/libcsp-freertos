@@ -8,8 +8,8 @@ endif()
 
 add_executable(demo)
 target_sources(demo PRIVATE
-  main.c
-  hooks.c
+  src/main.c
+  src/hooks.c
 )
 
 add_library(freertos_config INTERFACE)

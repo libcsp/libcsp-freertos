@@ -2,8 +2,8 @@ project('libcsp-freertos', 'c')
 
 cc = meson.get_compiler('c')
 
-src = ['main.c',
-       'hooks.c'
+src = ['src/main.c',
+       'src/hooks.c'
       ]
 
 src_freertos = ['freertos/list.c',
