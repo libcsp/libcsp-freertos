@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
+
+set(CMAKE_SYSTEM_NAME Generic)
+
 project(libcsp-freertos)
 
 if(NOT DEFINED FREERTOS_PORT)
@@ -17,6 +20,8 @@ target_include_directories(freertos_config SYSTEM
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(freertos)
+
+set(CSP_KERNEL_NAME freertos)
 add_subdirectory(subprojects/libcsp)
 
 target_link_libraries(demo PRIVATE
