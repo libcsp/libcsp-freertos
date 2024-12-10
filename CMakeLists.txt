@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
+
+set(CMAKE_SYSTEM_NAME Generic)
+set(CSP_SYSTEM_NAME freertos)
+
 project(libcsp-freertos)
 
 if(NOT DEFINED FREERTOS_PORT)
